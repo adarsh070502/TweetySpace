@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
+// Connecting to database
 const connectDB = async () => {
-  return await mongoose.connect(
-    "mongodb+srv://shivasharanya5:GkwsjybxBBws9rKo@cluster0.r0rbr.mongodb.net/TweetySpace"
-  );
+  const MONGODB_URL = process.env.MONGODB_URL;
+  return await mongoose.connect(MONGODB_URL);
 };
 
-module.exports = connectDB;
+export default connectDB;

@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+
 const UserSchema = new mongoose.Schema(
   {
     FullName: {
@@ -9,7 +10,7 @@ const UserSchema = new mongoose.Schema(
     UserName: {
       type: String,
       required: true,
-      maxLength: 10,
+      maxLength: 20,
       unique: true,
     },
     emailId: {
@@ -27,4 +28,4 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+export default mongoose.model("SigninDetails", UserSchema); //load the model name from env: process.env.SIGNUP_COLLECTION_NAME
