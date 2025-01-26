@@ -17,12 +17,19 @@ authRouter.post("/signup", async (req, res) => {
       Password: passwordHash,
     });
     const Save = await user.save();
-    const token = await jwt.sign({ _id: user._id }, "DEv@People@123", {
-      expiresIn: "1d",
-    });
+
+    const token = await jwt.sign(
+      { _id: user._id },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "1d",
+      }
+    );
+
     res.cookie(token, {
       expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
     });
+
     res.json({ message: "Signed Up Successfully", data: Save });
   } catch (err) {
     res
@@ -46,12 +53,18 @@ authRouter.post("/signin", async (req, res) => {
     const isMatch = await bcrypt.compare(Password, user.Password);
 
     if (isMatch) {
-      const token = await jwt.sign({ _id: user._id }, "DEv@People@123", {
-        expiresIn: "1d",
-      });
+      const token = await jwt.sign(
+        { _id: user._id },
+        process.env.JWT_SECRET_KEY,
+        {
+          expiresIn: "1d",
+        }
+      );
+
       res.cookie(token, {
         expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
       });
+
       res.json({ message: "Signed In Successfully" });
     } else {
       console.log("User not found");
@@ -61,6 +74,19 @@ authRouter.post("/signin", async (req, res) => {
     res
       .status(500)
       .json({ message: "Error in signing in", error: err.message });
+  }
+});
+
+// Signout
+authRouter.post("/signout", async (req, res) => {
+  try {
+    res.clearCookie("token", { httpOnly: true, secure: true });
+
+    res.json({ message: "Logged out successfully" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Error in signing out", error: err.message });
   }
 });
 
