@@ -1,0 +1,21 @@
+{
+  "name": "tweetyspace",
+  "version": "1.0.0",
+  "description": "Tweety Space For Connect",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/App.js",
+    "dev": "nodemon src/App.js"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript"
+  ],
+  "author": "DevConnect",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5",
+    "nodemon": "^3.1.9"
+  }
+}
