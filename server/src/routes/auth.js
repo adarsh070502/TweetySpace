@@ -33,7 +33,7 @@ authRouter.post("/signup", async (req, res) => {
     // Saving profile data
     const profileSave = await profile.save();
 
-    const token = await jwt.sign(
+    const authToken = await jwt.sign(
       { _id: user._id },
       process.env.JWT_SECRET_KEY,
       {
@@ -41,7 +41,7 @@ authRouter.post("/signup", async (req, res) => {
       }
     );
 
-    res.cookie(token, {
+    res.cookie(authToken, {
       expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
     });
 
@@ -80,7 +80,7 @@ authRouter.post("/signin", async (req, res) => {
 
       if (isMatch) {
         // Correct password
-        const token = await jwt.sign(
+        const authToken = await jwt.sign(
           { _id: user._id },
           process.env.JWT_SECRET_KEY,
           {
@@ -88,7 +88,7 @@ authRouter.post("/signin", async (req, res) => {
           }
         );
 
-        res.cookie(token, {
+        res.cookie(authToken, {
           expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
         });
 
@@ -109,7 +109,7 @@ authRouter.post("/signin", async (req, res) => {
 // Signout
 authRouter.post("/signout", async (req, res) => {
   try {
-    res.clearCookie("token", { httpOnly: true, secure: true });
+    res.clearCookie("authToken", { httpOnly: true, secure: true });
 
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {

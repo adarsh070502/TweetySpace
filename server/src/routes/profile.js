@@ -1,9 +1,10 @@
 import express from "express";
 import newProfile from "../models/profileModel.js";
+import isAuthenticated from "../middlewares/authentication_middleware.js";
 
 const profileRouter = express.Router();
 
-profileRouter.get("/get_profile", async (req, res) => {
+profileRouter.get("/get_profile", isAuthenticated, async (req, res) => {
   try {
     const { UserName, UserId } = req.body;
 
