@@ -28,6 +28,7 @@ authRouter.post("/signup", async (req, res) => {
       UserId: userSave._id.toString(),
       UserName: user.UserName,
       FullName: user.FullName,
+      ProfilePicture: process.env.DEFAULT_PROFILE_PICTURE,
     });
 
     // Saving profile data
@@ -51,7 +52,7 @@ authRouter.post("/signup", async (req, res) => {
     if (err.name === "ValidationError") {
       // Extract validation errors
       const errors = Object.values(err.errors).map((error) => error.message);
-      return res.status(400).json({ errors }); // Send errors to the client
+      return res.status(400).json({ validationErrors: errors }); // Send errors to the client
     } else {
       res
         .status(500)

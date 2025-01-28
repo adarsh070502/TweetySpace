@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from "validator";
 
 const profileSchema = new mongoose.Schema(
   {
@@ -58,7 +59,6 @@ const profileSchema = new mongoose.Schema(
         message: (props) =>
           `Profile picture url: ${props.value} is not a valid URL!`,
       },
-      //default: TBD
     },
     HeaderImage: {
       type: String,
@@ -72,7 +72,6 @@ const profileSchema = new mongoose.Schema(
         },
         message: (props) => `Header image: ${props.value} is not a valid URL!`,
       },
-      //default: TBD
     },
     TweetCount: {
       type: Number,
