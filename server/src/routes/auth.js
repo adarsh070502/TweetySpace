@@ -46,7 +46,11 @@ authRouter.post("/signup", async (req, res) => {
       expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
     });
 
-    res.status(200).json({ message: "Signed Up Successfully", data: userSave });
+    res.status(200).json({
+      message: "Signed Up Successfully",
+      Sigin: userSave,
+      profile: profileSave,
+    });
   } catch (err) {
     // Validation Error
     if (err.name === "ValidationError") {

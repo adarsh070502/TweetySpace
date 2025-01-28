@@ -36,6 +36,16 @@ const profileSchema = new mongoose.Schema(
       required: false,
       default: "",
     },
+    DateOfBirth: {
+      type: Date,
+      required: false,
+      default: undefined,
+    },
+    Location: {
+      type: String,
+      required: false,
+      default: "",
+    },
     FollowersCount: {
       type: Number,
       required: false,
@@ -88,4 +98,4 @@ const profileSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("profilesCollection", profileSchema); //load the model name from env: process.env.SIGNUP_COLLECTION_NAME
+export default mongoose.model("profileCollection", profileSchema);

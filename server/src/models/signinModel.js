@@ -52,4 +52,4 @@ const signinSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("signinCollection", signinSchema); //load the model name from env: process.env.SIGNUP_COLLECTION_NAME
+export default mongoose.model("signinCollection", signinSchema);
