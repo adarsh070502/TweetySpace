@@ -53,7 +53,10 @@ authRouter.post("/signup", async (req, res) => {
       // Extract validation errors
       const errors = Object.values(err.errors).map((error) => error.message);
       return res.status(400).json({ validationErrors: errors }); // Send errors to the client
+    } else if (err.name === "MongoServerError") {
+      res.status(400).json({ message: "MongoServerError", error: err.message });
     } else {
+      console.log(err.name);
       res
         .status(500)
         .json({ message: "Internal Server Error", error: err.message });
