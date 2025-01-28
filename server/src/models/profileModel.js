@@ -88,4 +88,4 @@ const profileSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("profilesColleection", profileSchema); //load the model name from env: process.env.SIGNUP_COLLECTION_NAME
+export default mongoose.model("profileCollection", profileSchema); //load the model name from env: process.env.SIGNUP_COLLECTION_NAME
