@@ -2,7 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import newUser from "../models/signinModel.js";
-import newProfile from "../models/profileModel.js";
+import initializeCollections from "../utils/initializeCollections.js";
 import isAuthenticated from "../middlewares/authentication_middleware.js";
 
 const authRouter = express.Router();
@@ -24,16 +24,7 @@ authRouter.post("/signup", async (req, res) => {
     // Saving sigup data
     const userSave = await user.save();
 
-    // Creating new profile
-    const profile = new newProfile({
-      UserId: userSave._id.toString(),
-      UserName: user.UserName,
-      FullName: user.FullName,
-      ProfilePicture: process.env.DEFAULT_PROFILE_PICTURE,
-    });
-
-    // Saving profile data
-    const profileSave = await profile.save();
+    const [profileSave, followersSave] = await initializeCollections(userSave);
 
     const authToken = await jwt.sign(
       { _id: user._id },
@@ -53,6 +44,7 @@ authRouter.post("/signup", async (req, res) => {
       message: "Signed Up Successfully",
       Sigin: userSave,
       profile: profileSave,
+      followers: followersSave,
     });
   } catch (err) {
     // Validation Error

@@ -4,7 +4,7 @@ import validator from "validator";
 const profileSchema = new mongoose.Schema(
   {
     UserId: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
       unique: true,
     },
