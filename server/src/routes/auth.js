@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import newUser from "../models/signinModel.js";
 import newProfile from "../models/profileModel.js";
+import isAuthenticated from "../middlewares/authentication_middleware.js";
 
 const authRouter = express.Router();
 
@@ -41,9 +42,11 @@ authRouter.post("/signup", async (req, res) => {
         expiresIn: "1d",
       }
     );
-
-    res.cookie(authToken, {
-      expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
+    res.cookie("authToken", authToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+      maxAge: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
     });
 
     res.status(200).json({
@@ -96,8 +99,11 @@ authRouter.post("/signin", async (req, res) => {
           }
         );
 
-        res.cookie(authToken, {
-          expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
+        res.cookie("authToken", authToken, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "Strict",
+          maxAge: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
         });
 
         res.status(200).json({ message: "Signed In Successfully" });
@@ -115,9 +121,13 @@ authRouter.post("/signin", async (req, res) => {
 });
 
 // Signout
-authRouter.post("/signout", async (req, res) => {
+authRouter.post("/signout", isAuthenticated, async (req, res) => {
   try {
-    res.clearCookie("authToken", { httpOnly: true, secure: true });
+    res.clearCookie("authToken", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Strict",
+    });
 
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
