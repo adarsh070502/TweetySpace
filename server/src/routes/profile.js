@@ -65,7 +65,7 @@ profileRouter.post("/add_follower", isAuthenticated, async (req, res) => {
   }
 });
 
-profileRouter.get("/get_followers", async (req, res) => {
+profileRouter.get("/get_followers", isAuthenticated, async (req, res) => {
   try {
     const { userId } = req.body;
 
