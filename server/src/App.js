@@ -9,6 +9,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import authRouter from "./routes/auth.js";
 import profileRouter from "./routes/profile.js";
+import followersRouter from "./routes/followers.js";
 import connectDB from "./config/database.js";
 
 // Creating App
@@ -24,6 +25,7 @@ app.use(cookieParser());
 // Routes
 app.use("/", authRouter);
 app.use("/profile", profileRouter);
+app.use("/followers", followersRouter);
 
 // Connecting to DB and starting server
 connectDB()
