@@ -30,7 +30,7 @@ authRouter.post("/signup", async (req, res) => {
       { _id: user._id },
       process.env.JWT_SECRET_KEY,
       {
-        expiresIn: "1d",
+        expiresIn: "8h",
       }
     );
     res.cookie("authToken", authToken, {

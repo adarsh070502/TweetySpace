@@ -20,9 +20,12 @@ const isAuthenticated = (req, res, next) => {
     // Proceed to the next middleware or route handler
     next();
   } catch (err) {
-    return res
-      .status(403)
-      .json({ message: "Invalid or expired token. Access denied." });
+    if (err.name === "TokenExpiredError") {
+      return res
+        .status(403)
+        .json({ message: "Token expired. Please log in again." });
+    }
+    return res.status(403).json({ message: "Invalid token. Access denied." });
   }
 };
 
