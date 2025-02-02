@@ -1,6 +1,5 @@
 import express from "express";
 import newProfile from "../models/profileModel.js";
-import Followers from "../models/followersModel.js";
 import isAuthenticated from "../middlewares/authentication_middleware.js";
 
 const profileRouter = express.Router();
