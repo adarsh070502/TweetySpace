@@ -1,29 +1,26 @@
 import express from "express";
-import newProfile from "../models/profileModel.js";
+import Profile from "../models/profileModel.js"; // Import Profile model
 import isAuthenticated from "../middlewares/authentication_middleware.js";
 
 const profileRouter = express.Router();
 
 profileRouter.get("/get_profile", isAuthenticated, async (req, res) => {
   try {
-    const { UserName, UserId } = req.body;
-
-    let profile;
-    if (UserName) {
-      profile = await newProfile.findOne({ UserName: UserName });
-    } else {
-      profile = await newProfile.findOne({ UserId: UserId });
-    }
+    const userId = req.user._id; // Get the userId from the decoded JWT token
+    // Fetch the profile using userId
+    const profile = await Profile.findOne({ UserId: userId });
 
     if (!profile) {
-      // No User Found
-      console.log("User not found");
-      res.status(401).json({ message: "User not found" });
-    } else {
-      res.status(200).json({ profile });
+      console.log("Profile not found");
+      return res.status(404).json({ message: "Profile not found" });
     }
+
+    res.status(200).json({ profile });
   } catch (err) {
-    res.status(500).json({ message: "Internal Server Error", error: err });
+    console.error("Error fetching profile:", err);
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: err.message });
   }
 });
 

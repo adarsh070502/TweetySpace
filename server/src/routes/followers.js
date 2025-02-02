@@ -42,10 +42,16 @@ followersRouter.post("/add_follower", isAuthenticated, async (req, res) => {
       { $inc: { FollowersCount: 1 } }, // Increment FollowersCount by 1
       { new: true } // Return updated document
     );
-
+    //update Following count
+    const updateFollowingCount = await profiles.findOneAndUpdate(
+      { UserId: followerId }, // Find user by ID
+      { $inc: { FollowingCount: 1 } }, // Increment FollowersCount by 1
+      { new: true }
+    );
     res.status(200).json({
       message: "Follower added successfully",
       updatedUserProfile: updatedProfile,
+      updateFollowingCount: updateFollowingCount,
     });
   } catch (err) {
     console.log(err);
