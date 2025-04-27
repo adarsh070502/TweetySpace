@@ -8,12 +8,13 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import morgan from "morgan";
+import connectDB from "./config/database.js";
 import authRouter from "./routes/auth.js";
 import profileRouter from "./routes/profile.js";
 import followersRouter from "./routes/followers.js";
 import uploadPhotoRouter from "./routes/photoUpload.js";
-import connectDB from "./config/database.js";
 import postsRouter from "./routes/Posts.js";
+
 // Creating App
 const app = express();
 const port = process.env.PORT;
@@ -31,6 +32,7 @@ app.use("/profile", profileRouter);
 app.use("/followers", followersRouter);
 app.use("/photos", uploadPhotoRouter);
 app.use("/post", postsRouter);
+
 // Connecting to DB and starting server
 connectDB()
   .then(() => {

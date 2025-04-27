@@ -5,8 +5,8 @@ const initializeCollections = async (user) => {
   // Creating and Saving new profile
   const profile = new newProfile({
     UserId: user._id.toString(),
-    UserName: user.UserName,
-    FullName: user.FullName,
+    UserName: user.userName,
+    FullName: user.fullName,
     ProfilePicture: process.env.DEFAULT_PROFILE_PICTURE,
   });
   const profileSave = await profile.save();

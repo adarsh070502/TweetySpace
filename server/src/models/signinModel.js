@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const signinSchema = new mongoose.Schema(
   {
-    FullName: {
+    fullName: {
       type: String,
       required: true,
       maxLength: 30,
@@ -13,7 +13,7 @@ const signinSchema = new mongoose.Schema(
         message: "FullName must be at least 3 characters long",
       },
     },
-    UserName: {
+    userName: {
       type: String,
       required: true,
       maxLength: 20,
@@ -36,15 +36,9 @@ const signinSchema = new mongoose.Schema(
         message: "Invalid email address",
       },
     },
-    Password: {
+    password: {
       type: String,
       required: true,
-      validate: {
-        validator: function (value) {
-          return value.length >= 1;
-        },
-        message: "Password must be at least 1 characters long",
-      },
     },
   },
   {
